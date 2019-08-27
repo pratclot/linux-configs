@@ -1,0 +1,13 @@
+- name: copy functions' definitions
+  become: yes
+  synchronize:
+    src: etc/profile.d/
+    dest: /etc/profile.d
+
+- name: configure .bash_profile
+  lineinfile:
+    path: ~/.bash_profile
+    regexp: '^for i in /etc/profile.d/'
+    line: 'for i in /etc/profile.d/*; do . $i; done'
+  tags:
+    - bash_profile

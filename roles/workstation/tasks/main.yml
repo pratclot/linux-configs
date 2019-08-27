@@ -1,0 +1,7 @@
+- include: bash.yml
+  tags:
+    - bash
+
+- include: brew.yml
+  tags:
+    - brew

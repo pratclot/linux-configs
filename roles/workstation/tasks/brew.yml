@@ -11,6 +11,7 @@
     state: present
   with_items:
     - adoptopenjdk8
+    - iterm2
 
 - name: install brew packages
   homebrew:

@@ -4,6 +4,14 @@
     src: etc/profile.d/
     dest: /etc/profile.d
 
+- name: create .bash_profile
+  become: no
+  file:
+    path: ~/.bash_profile
+    state: file
+  tags:
+    - bash_profile
+
 - name: configure .bash_profile
   lineinfile:
     path: ~/.bash_profile

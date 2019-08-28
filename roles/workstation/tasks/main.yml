@@ -5,3 +5,11 @@
 - include: brew.yml
   tags:
     - brew
+
+- include: npm.yml
+  tags:
+    - npm
+
+- include: ssh_key.yml
+  tags:
+    - ssh_key

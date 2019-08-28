@@ -1,0 +1,9 @@
+- name: create .ssh dir
+  file:
+    path: ~/.ssh
+    state: directory
+
+- name: generate an ssh key
+  openssh_keypair:
+    path: ~/.ssh/id_rsa
+    type: ed25519

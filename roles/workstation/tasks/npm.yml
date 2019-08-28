@@ -1,0 +1,11 @@
+- name: a hack to ignore SSL errors
+  shell: |
+    npm config set strict-ssl false
+
+- name: install npm packages
+  npm:
+    name: '{{ item }}'
+    state: present
+    global: yes
+  with_items:
+    - alfred-fkill

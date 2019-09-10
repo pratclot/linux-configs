@@ -14,6 +14,7 @@
   with_items:
     - adoptopenjdk8
     - iterm2
+    - vagrant
 
 - name: install brew packages
   homebrew:
@@ -27,4 +28,4 @@
     - groovy
     - gpg
     - coreutils
-
+    - docker

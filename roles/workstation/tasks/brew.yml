@@ -9,6 +9,8 @@
   homebrew_cask:
     name: '{{ item }}'
     state: present
+  tags:
+    - casks
   with_items:
     - adoptopenjdk8
     - iterm2
@@ -22,3 +24,7 @@
     - python
     - node
     - maven
+    - groovy
+    - gpg
+    - coreutils
+

@@ -13,3 +13,8 @@
 - include: ssh_key.yml
   tags:
     - ssh_key
+
+- include: gem.yml
+  tags:
+    - gem
+

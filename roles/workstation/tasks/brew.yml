@@ -15,6 +15,7 @@
     - adoptopenjdk8
     - iterm2
     - vagrant
+    - virtualbox
 
 - name: install brew packages
   homebrew:

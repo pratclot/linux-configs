@@ -1,4 +1,4 @@
-- name: install casks
+- name: install taps
   homebrew_tap:
     name: '{{ item }}'
     state: present
@@ -16,6 +16,7 @@
     - iterm2
     - vagrant
     - virtualbox
+    - macdown
 
 - name: install brew packages
   homebrew:

@@ -32,4 +32,6 @@
     - coreutils
     - docker
     - iproute2mac
+    - tomcat
+    - tomcat@8
 

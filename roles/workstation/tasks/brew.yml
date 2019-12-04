@@ -17,6 +17,7 @@
     - vagrant
     - virtualbox
     - macdown
+    - docker
 
 - name: install brew packages
   homebrew:

@@ -21,3 +21,6 @@ alias dvars='docker ps -q | xargs -L1 -IA docker inspect A --format "{{range .Co
 alias dwatch='watch -n1 '\''docker ps -a | grep "second\|minute"'\'''
 alias oops='ansible : -i /usr/local/pb_ansible/hosts.py --vault-password-file ~/dev-password -m shell -a'
 alias gp='cd $ANSIBLE_HOME && git pull'
+
+# kubectl
+alias kev='kubectl get events --sort-by="{.lastTimestamp}"'

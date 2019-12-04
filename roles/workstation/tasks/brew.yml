@@ -36,4 +36,5 @@
     - tomcat
     - tomcat@8
     - bash-completion
+    - helm
 

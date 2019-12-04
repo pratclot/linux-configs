@@ -35,4 +35,5 @@
     - iproute2mac
     - tomcat
     - tomcat@8
+    - bash-completion
 

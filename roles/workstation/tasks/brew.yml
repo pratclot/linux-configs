@@ -39,3 +39,8 @@
     - helm
     - kubectx
     - sbt
+    - mtr
+
+- name: fix mtr
+  shell: |
+    for i in $(brew list mtr | grep sbin/mtr); do ln $i /usr/local/bin/$(basename $i); done

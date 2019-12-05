@@ -4,6 +4,11 @@
     src: etc/profile.d/
     dest: /etc/profile.d
 
+- name: create kubectl aliases
+  get_url:
+    url: https://raw.githubusercontent.com/ahmetb/kubectl-alias/master/.kubectl_aliases
+    dest: /etc/profile.d/kubectl_aliases_by_ahmetb_superhero.sh
+
 - name: create .bash_profile
   become: no
   file:

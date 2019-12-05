@@ -38,3 +38,4 @@
     - bash-completion
     - helm
     - kubectx
+    - sbt

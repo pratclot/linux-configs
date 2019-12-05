@@ -17,3 +17,7 @@
 - include: gem.yml
   tags:
     - gem
+
+- include: pip.yml
+  tags:
+    - pip

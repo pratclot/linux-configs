@@ -24,3 +24,4 @@ alias gp='cd $ANSIBLE_HOME && git pull'
 
 # kubectl
 alias kev='kubectl get events --sort-by="{.lastTimestamp}"'
+alias kgco='kubectl get pods -o go-template --template="{{range .items}}{{range .spec.containers}}{{.image}} {{end}}{{printf \"\n\"}}{{end}}"'

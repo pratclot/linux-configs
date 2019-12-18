@@ -13,6 +13,7 @@ if [[ $- =~ i ]]; then
    user_color=$yellow
    root_color=$(tput setab 1)
    if [ "$(id -u)" -ne 0 ]; then
-      PS1="\[$reset\][\[$user_color\]\u\[$reset\]@\[$reset\]\h \[$cyan\]\W\[$reset\]] [\$(EXITCODE=\$?; if [ \$EXITCODE -ne 0 ]; then echo ${red}\${EXITCODE}; else echo $green\${EXITCODE}; fi)\[$reset\]] \[$reset\]\[$reset\]\\$\[$reset\] "
+      KNS=$(LC_ALL=C awk -F": " '/current-context/ {print $2}' ~/.kube/config)
+      PS1="\[$reset\][\[$user_color\]\u\[$reset\]@\[$reset\]\h \[$cyan\]\W\[$reset\] ${KNS}] [\$(EXITCODE=\$?; if [ \$EXITCODE -ne 0 ]; then echo ${red}\${EXITCODE}; else echo $green\${EXITCODE}; fi)\[$reset\]] "
    fi
 fi

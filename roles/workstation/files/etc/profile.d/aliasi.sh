@@ -26,3 +26,4 @@ alias watch='watch '
 # kubectl
 alias kev='kubectl get events --sort-by="{.lastTimestamp}"'
 alias kgco='kubectl get pods -o go-template --template="{{range .items}}{{.metadata.name}}{{printf \"\n\"}}{{range .spec.containers}}  {{.name}}{{printf \"\n\"}}{{end}}{{printf \"---------\n\"}}{{end}}"'
+alias h2='helm2 --tiller-namespace $(kubens -c)'

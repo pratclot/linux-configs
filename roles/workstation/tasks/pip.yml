@@ -3,3 +3,4 @@
     name: '{{ item }}'
   with_items:
     - kube-shell
+    - yq

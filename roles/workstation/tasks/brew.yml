@@ -41,6 +41,7 @@
     - sbt
     - mtr
     - watch
+    - sonar-scanner
 
 - name: fix mtr
   shell: |

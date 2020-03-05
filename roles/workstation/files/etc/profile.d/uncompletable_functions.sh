@@ -25,3 +25,22 @@ hgrep() {
 htail() {
        (head -1; tail $@)
 }
+aur() {
+       git clone https://aur.archlinux.org/"$1".git &&
+       cd "$1" &&
+       makepkg -si
+}
+aum() {
+	cd "$1" &&
+	makepkg -si
+	cd ..
+}
+getp() {
+  op get item $1 | jq -r '.details.fields[] | select(.designation=="password") | .value'
+}
+getu() {
+  op get item $1 | jq -r '.details.fields[] | select(.designation=="username") | .value'
+}
+gav() {
+  ansible localhost -m setup | sed 's#.*SUCCESS =>##' | jq .ansible_facts."$1"
+}

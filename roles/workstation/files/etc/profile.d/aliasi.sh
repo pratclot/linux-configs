@@ -22,6 +22,8 @@ alias dwatch='watch -n1 '\''docker ps -a | grep "second\|minute"'\'''
 alias oops='ansible : -i /usr/local/pb_ansible/hosts.py --vault-password-file ~/dev-password -m shell -a'
 alias gp='cd $ANSIBLE_HOME && git pull'
 alias watch='watch '
+alias sudo='sudo '
+alias tailf='tail -f '
 
 # kubectl
 alias kev='kubectl get events --sort-by="{.lastTimestamp}"'
@@ -29,3 +31,14 @@ alias kgco='kubectl get pods -o go-template --template="{{range .items}}{{.metad
 alias h2='helm2 --tiller-namespace $(kubens -c)'
 alias h2st='for i in $(h2 ls -q); do h2 status $i; done'
 alias h2link='h2st | awk '\''/.k8s.walmart.net/ {print $1}'\'''
+
+# arch
+alias pms='sudo pacman -Syy --noconfirm'
+alias pmf='pacman -Ss'
+alias pmr='sudo pacman -R --noconfirm'
+alias pmff='sudo pacman -F'
+alias pmy='sudo pacman -Sy'
+
+# copyq
+alias cpf='copyq copy - <'
+alias cpc='cat <<< $(copyq clipboard)'

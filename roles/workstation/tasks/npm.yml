@@ -3,6 +3,7 @@
     npm config set strict-ssl false
 
 - name: install npm packages
+  when: ansible_distribution == "MacOSX"
   npm:
     name: '{{ item }}'
     state: present

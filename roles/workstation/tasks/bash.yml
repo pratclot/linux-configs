@@ -11,8 +11,8 @@
   with_items:
     - url: https://raw.githubusercontent.com/pratclot/kubectl-aliases/master/.kubectl_aliases
       dest: /etc/profile.d/kubectl_aliases_by_ahmetb_superhero.sh
-    - url: https://raw.githubusercontent.com/cykerway/complete-alias/master/bash_completion.sh
-      dest : /etc/profile.d/cykerway_bash_completion.sh
+#    - url: https://raw.githubusercontent.com/cykerway/complete-alias/master/bash_completion.sh
+#      dest : /etc/profile.d/cykerway_bash_completion.sh
 
 - name: create .bash_profile
   become: no

@@ -8,3 +8,5 @@ Do this to configure your freshly dispatched Mac:
 ./basics.sh 
 ansible-playbook -l localhost site.yml
 ```
+
+This even works for arch now!

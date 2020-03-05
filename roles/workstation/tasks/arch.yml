@@ -1,0 +1,10 @@
+- name: enable systemd services
+  become: yes
+  systemd:
+    service: "{{ item }}"
+    enabled: yes
+  with_items:
+    - gdm
+    - cockpit.socket
+    - libvirtd
+    - bluetooth

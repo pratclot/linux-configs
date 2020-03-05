@@ -1,0 +1,70 @@
+- name: set package list
+  set_fact:
+    pkgs:
+      - ranger
+      - python
+      - maven
+      - groovy
+      - coreutils
+      - docker
+      - bash-completion
+      - helm
+      - kubectx
+      - sbt
+      - mtr
+      - docker
+      - python-pip
+      - jq
+      - arch-wiki-lite
+      - tilda
+      - lsof
+      - usbutils
+      - base-devel
+      - gnome-tweaks
+      - xorg
+      - xf86-video-intel
+      - gdm
+      - telegram-desktop
+      - openvpn
+      - networkmanager-openvpn
+      - xca
+      - audacity
+      - bluez-utils
+      - dconf-editor
+      - feh
+      - virt-manager
+      - transmission-gtk
+      - zathura
+      - zathura-pdf-poppler
+      - zathura-djvu
+      - cockpit
+      - cockpit-dashboard
+      - ebtables
+      - dnsmasq
+      - dmidecode
+      - lshw
+      - ovmf
+      - powertop
+      - cmake
+      - nasm
+      - acpica
+      - acpi_call
+      - looking-glass
+      - bind-tools
+      - iotop
+      - ruby-bundler
+      - glibc
+      - iasl
+      - subversion
+      - nvidia-prime
+      - copyq
+      - usbutils
+
+- name: install pacman packages
+  become: yes
+  pacman:
+    name: "{{ pkgs }}"
+    state: present
+  register: xxx
+
+# - debug: msg={{ xxx.stdout.split('\n')[:-1] }}

@@ -3,8 +3,19 @@
     - bash
 
 - include: brew.yml
+  when: ansible_distribution == "MacOSX"
   tags:
     - brew
+
+- include: pacman.yml
+  when: ansible_distribution == "Archlinux"
+  tags:
+    - pacman
+
+- include: arch.yml
+  when: ansible_distribution == "Archlinux"
+  tags:
+    - arch
 
 - include: npm.yml
   tags:

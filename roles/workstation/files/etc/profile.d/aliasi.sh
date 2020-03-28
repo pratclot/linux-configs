@@ -33,11 +33,11 @@ alias h2st='for i in $(h2 ls -q); do h2 status $i; done'
 alias h2link='h2st | awk '\''/.k8s.walmart.net/ {print $1}'\'''
 
 # arch
-alias pms='sudo pacman -Syy --noconfirm'
+alias pms='sudo pacman -S --noconfirm'
 alias pmf='pacman -Ss'
 alias pmr='sudo pacman -R --noconfirm'
 alias pmff='sudo pacman -F'
-alias pmy='sudo pacman -Sy'
+alias pmu='sudo pacman -Syu --noconfirm'
 
 # copyq
 alias cpf='copyq copy - <'

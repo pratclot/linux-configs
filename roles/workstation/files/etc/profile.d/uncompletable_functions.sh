@@ -26,9 +26,12 @@ htail() {
        (head -1; tail $@)
 }
 aur() {
-       git clone https://aur.archlinux.org/"$1".git &&
-       cd "$1" &&
-       makepkg -si
+  export AUR_PREV_PATH=$(pwd) &&
+  cd ~/gits &&
+  git clone https://aur.archlinux.org/"$1".git &&
+  cd "$1" &&
+  makepkg -si &&
+  cd "${AUR_PREV_PATH}"
 }
 aum() {
 	cd "$1" &&

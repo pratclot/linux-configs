@@ -24,6 +24,7 @@ alias gp='cd $ANSIBLE_HOME && git pull'
 alias watch='watch '
 alias sudo='sudo '
 alias tailf='tail -f '
+alias ll='ls -la --group-directories-first --color'
 
 # kubectl
 alias kev='kubectl get events --sort-by="{.lastTimestamp}"'

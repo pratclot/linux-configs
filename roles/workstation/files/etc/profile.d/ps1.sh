@@ -16,5 +16,6 @@ if [[ $- =~ i ]]; then
       KCC=$(LC_ALL=C awk -F": " '/current-context/ {print $2}' ~/.kube/config)
       KNS=$(yq -r --arg KCC "${KCC}" '.contexts[] | select(.name==$KCC) | .context.namespace' ~/.kube/config)
       PS1="\[$reset\][\[$user_color\]\u\[$reset\]@\[$reset\]\h \[$cyan\]\W\[$reset\] \[$bold\]${KNS}\[$reset\]] [\$(EXITCODE=\$?; if [ \$EXITCODE -ne 0 ]; then echo ${red}\${EXITCODE}; else echo $green\${EXITCODE}; fi)\[$reset\]] "
+#      PS1="\[$reset\][\[$user_color\]\u\[$reset\]@\[$reset\]\h \[$cyan\]\W\[$reset\] \[$bold\]${KNS}\[$reset\]] [\$(EXITCODE=\$?; if [ \$EXITCODE -ne 0 ]; then echo ${red}\$(printf %03d ${EXITCODE}); else echo $green\$(printf %03d ${EXITCODE}); fi)\[$reset\]] "
    fi
 fi

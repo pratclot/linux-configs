@@ -25,6 +25,8 @@ alias watch='watch '
 alias sudo='sudo '
 alias tailf='tail -f '
 alias ll='ls -la --group-directories-first --color'
+alias lltr='ll -tr'
+alias bc="BC_ENV_ARGS=<(echo "scale=2") \bc"
 
 # kubectl
 alias kev='kubectl get events --sort-by="{.lastTimestamp}"'
@@ -39,7 +41,11 @@ alias pmf='pacman -Ss'
 alias pmr='sudo pacman -R --noconfirm'
 alias pmff='sudo pacman -F'
 alias pmu='sudo pacman -Syu --noconfirm'
+alias pml='sudo pacman -Ql'
 
 # copyq
 alias cpf='copyq copy - <'
 alias cpc='cat <<< $(copyq clipboard)'
+
+# msi
+alias temps="sudo isw -r 16S3EMS1"

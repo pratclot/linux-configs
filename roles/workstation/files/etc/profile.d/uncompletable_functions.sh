@@ -28,7 +28,9 @@ htail() {
 aur() {
   export AUR_PREV_PATH=$(pwd) &&
   cd ~/gits &&
-  git clone https://aur.archlinux.org/"$1".git &&
+  if [ ! -d "$1" ]; then
+    git clone https://aur.archlinux.org/"$1".git
+  fi
   cd "$1" &&
   makepkg -si &&
   cd "${AUR_PREV_PATH}"
@@ -46,4 +48,9 @@ getu() {
 }
 gav() {
   ansible localhost -m setup | sed 's#.*SUCCESS =>##' | jq .ansible_facts."$1"
+}
+aliasi() {
+  cd ~/linux-configs/
+  ansible-playbook site.yml -t bash
+  cd -
 }

@@ -59,6 +59,15 @@
       - nvidia-prime
       - copyq
       - usbutils
+      - ripgrep
+      - go
+      - protobuf
+      - cmus
+      - alsa-utils
+      - noto-fonts-emoji
+      - ncdu
+      - realtime-privileges
+      - kdenlive
 
 - name: install pacman packages
   become: yes

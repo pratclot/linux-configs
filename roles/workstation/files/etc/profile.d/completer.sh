@@ -10,6 +10,6 @@ _docker_completer() {
                return 0
        #fi
 }
-for i in $(awk -F'\\(\\) {' '/() {/ {print $1}' /etc/profile.d/docker_functions.sh); do
+for i in $(awk -F'[()]' '/\(\) \{/ {print $1}' /etc/profile.d/docker_functions.sh); do
  complete -F _docker_completer $i
 done

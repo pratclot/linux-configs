@@ -3,6 +3,8 @@ alias ttop='top -cHi -d1'
 alias vi='vim'
 alias awk-sum='awk '\''{sum+=$NF} END {print sum}'\'''
 alias gip='ip a | grep '\''inet '\'''
+alias mip='ip r g 1 | awk '\''/via/ {print $(NF-2)}'\'''
+alias pws='python3 -m http.server 80'
 alias tstrace='strace -s255 -ttfFp'
 alias gitlog='git log --branches --remotes --tags --graph --oneline --decorate'
 alias yi='yum install -y'
@@ -49,3 +51,4 @@ alias cpc='cat <<< $(copyq clipboard)'
 
 # msi
 alias temps="sudo isw -r 16S3EMS1"
+

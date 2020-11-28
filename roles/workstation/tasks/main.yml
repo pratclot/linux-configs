@@ -17,6 +17,11 @@
   tags:
     - arch
 
+- include: apt.yml
+  when: ansible_distribution == "Ubuntu"
+  tags:
+    - ubuntu
+
 - include: npm.yml
   tags:
     - npm

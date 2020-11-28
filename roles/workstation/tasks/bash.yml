@@ -29,3 +29,28 @@
     line: 'for i in /etc/profile.d/*; do . $i; done'
   tags:
     - bash_profile
+
+- name: check bashrc for ubuntu
+  when: ansible_distribution == "Ubuntu"
+  become: no
+  lineinfile:
+    state: absent
+    path: ~/.bashrc
+    regexp: "^. /etc/profile$"
+  check_mode: true
+  changed_when: false
+  register: check
+  tags:
+    - bashrc
+
+- name: configure bashrc for ubuntu
+  when: ansible_distribution == "Ubuntu"
+  become: no
+  lineinfile:
+    state: present
+    path: ~/.bashrc
+    line: ". /etc/profile"
+    owner: "{{ansible_env.USER}}"
+  when: check.found == 0
+  tags:
+    - bashrc

@@ -30,6 +30,10 @@ alias tailf='tail -f '
 alias ll='ls -la --group-directories-first --color'
 alias lltr='ll -tr'
 alias bc="BC_ENV_ARGS=<(echo "scale=2") \bc"
+alias urldecode='python3 -c "import sys, urllib.parse as ul; \
+    print(ul.unquote_plus(sys.argv[1]))"'
+alias urlencode='python3 -c "import sys, urllib.parse as ul; \
+    print (ul.quote_plus(sys.argv[1]))"'
 
 # kubectl
 alias kev='kubectl get events --sort-by="{.lastTimestamp}"'

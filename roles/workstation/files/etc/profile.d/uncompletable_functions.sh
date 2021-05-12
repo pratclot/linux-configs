@@ -1,9 +1,9 @@
 #!/bin/bash
 dff() {
        if [ $# -gt 0 ]; then
-           df $@ | grep -v "/var/lib/docker/"
+           df $@ | grep -v "/var/lib/docker/\|/snap/"
        else
-           df -h | grep -v "/var/lib/docker/"
+           df -h | grep -v "/var/lib/docker/\|/snap"
        fi
 }
 mkcd() {

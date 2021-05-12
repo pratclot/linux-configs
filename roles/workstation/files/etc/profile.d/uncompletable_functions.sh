@@ -54,3 +54,10 @@ aliasi() {
   ansible-playbook site.yml -t bash
   cd -
 }
+rss-sum() {
+  ps -F k-rss | awk '{sum+=$6} END {print sum}'
+}
+rssu-sum() {
+  ps -F k-rss -u "$1" | awk '{sum+=$6} END {print sum}'
+}
+

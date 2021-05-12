@@ -62,7 +62,9 @@
 #      - iasl
 #      - subversion
 #      - nvidia-prime
-#      - copyq
+      - copyq
+      - vim
+      - guake
 #      - usbutils
       - ripgrep
 #      - go

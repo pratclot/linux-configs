@@ -9,6 +9,7 @@ alias tstrace='strace -s255 -ttfFp'
 alias gitlog='git log --branches --remotes --tags --graph --oneline --decorate'
 alias yi='yum install -y'
 alias yw='yum whatprovides'
+alias rss='ps -F k-rss'
 alias rssu='ps -F k-rss -u'
 alias cmds='zcat -f /var/log/commands.log* | sort -m | LC_ALL=C sort -k 1M | less'
 alias mtailf='multitail --follow-all'
@@ -29,6 +30,10 @@ alias tailf='tail -f '
 alias ll='ls -la --group-directories-first --color'
 alias lltr='ll -tr'
 alias bc="BC_ENV_ARGS=<(echo "scale=2") \bc"
+alias urldecode='python3 -c "import sys, urllib.parse as ul; \
+    print(ul.unquote_plus(sys.argv[1]))"'
+alias urlencode='python3 -c "import sys, urllib.parse as ul; \
+    print (ul.quote_plus(sys.argv[1]))"'
 
 # kubectl
 alias kev='kubectl get events --sort-by="{.lastTimestamp}"'

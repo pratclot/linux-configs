@@ -44,13 +44,12 @@
     - bashrc
 
 - name: configure bashrc for ubuntu
-  when: ansible_distribution == "Ubuntu"
   become: no
   lineinfile:
     state: present
     path: ~/.bashrc
     line: ". /etc/profile"
     owner: "{{ansible_env.USER}}"
-  when: check.found == 0
+  when: ansible_distribution == "Ubuntu" and check.found == 0
   tags:
     - bashrc

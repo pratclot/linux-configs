@@ -10,3 +10,9 @@ ansible-playbook -l localhost site.yml
 ```
 
 This even works for arch now!
+
+Use `apply.sh` script to apply a tag quickly:
+
+```bash
+./apply.sh bash
+```

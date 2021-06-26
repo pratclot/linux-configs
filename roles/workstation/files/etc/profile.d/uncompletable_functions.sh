@@ -61,3 +61,7 @@ rssu-sum() {
   ps -F k-rss -u "$1" | awk '{sum+=$6} END {print sum}'
 }
 
+# Displays a thumbnail view of a directory with pictures
+ff() {
+  feh -t -E 100 -y 150 $1
+}

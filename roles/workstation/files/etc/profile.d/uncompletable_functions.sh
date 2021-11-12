@@ -61,5 +61,10 @@ rssu-sum() {
   ps -F k-rss -u "$1" | awk '{sum+=$6} END {print sum}'
 }
 alsp() {
-  port=$1; iface=$(ip r | awk '/default/ {print $NF}'); neighbours=$(ip -4 n show dev $iface | cut -d" " -f1 | tr "\n" " "); nmap -PN -p $port $neighbours --open -oG - 2>/dev/null | awk -v pattern="$port/open" '$0 ~ pattern {print $2}'
+  port=$1
+  iface=$(ip r | awk '/default/ {print $NF}')
+  net=$(ip a show $iface | awk '/inet / {print $2}')
+  1>/dev/null 2>/dev/null nmap -sP $net -oG - --host-timeout 1 &
+  neighbours=$(ip -4 n show dev $iface | cut -d" " -f1 | tr "\n" " ")
+  nmap -PN -p $port $neighbours --open -oG - 2>/dev/null | awk -v pattern="$port/open" '$0 ~ pattern {print $2}'
 }

@@ -10,3 +10,4 @@
     global: yes
   with_items:
     - alfred-fkill
+    - web-ext

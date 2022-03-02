@@ -17,7 +17,7 @@
     - vagrant
     - virtualbox
     - macdown
-    - docker
+#    - docker
 
 - name: install brew packages
   homebrew:
@@ -31,7 +31,8 @@
     - groovy
     - gpg
     - coreutils
-    - docker
+#    - docker
+    - podman
     - iproute2mac
     - tomcat
     - tomcat@8

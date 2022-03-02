@@ -43,7 +43,12 @@
     - mtr
     - watch
     - sonar-scanner
+    - pass
+    - pinentry-mac
+    - insomnia
+    - charles
 
 - name: fix mtr
+  tags: mtr
   shell: |
     for i in $(brew list mtr | grep sbin/mtr); do ln $i /usr/local/bin/$(basename $i); done

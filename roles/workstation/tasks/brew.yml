@@ -48,6 +48,7 @@
     - insomnia
     - charles
     - ripgrep
+    - jq
 
 - name: fix mtr
   tags: mtr

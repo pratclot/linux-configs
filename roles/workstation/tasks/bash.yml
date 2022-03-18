@@ -53,3 +53,10 @@
   when: ansible_distribution == "Ubuntu" and check.found == 0
   tags:
     - bashrc
+
+- name: setup autoadb
+  synchronize:
+    src: autoadb.sh
+    dest: ~/autoadb.sh
+  tags:
+    - autoadb

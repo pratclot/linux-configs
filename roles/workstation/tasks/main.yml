@@ -1,39 +1,43 @@
-- include: bash.yml
+- import_tasks: bash.yml
   tags:
     - bash
 
-- include: brew.yml
+- import_tasks: brew.yml
   when: ansible_distribution == "MacOSX"
   tags:
     - brew
 
-- include: pacman.yml
+- import_tasks: pacman.yml
   when: ansible_distribution == "Archlinux"
   tags:
     - pacman
 
-- include: arch.yml
+- import_tasks: arch.yml
   when: ansible_distribution == "Archlinux"
   tags:
     - arch
 
-- include: apt.yml
+- import_tasks: apt.yml
   when: ansible_distribution == "Ubuntu"
   tags:
     - ubuntu
 
-- include: npm.yml
+- import_tasks: npm.yml
   tags:
     - npm
 
-- include: ssh_key.yml
+- import_tasks: ssh_key.yml
   tags:
     - ssh_key
 
-- include: gem.yml
+- import_tasks: gem.yml
   tags:
     - gem
 
-- include: pip.yml
+- import_tasks: pip.yml
   tags:
     - pip
+
+- import_tasks: gpg.yml
+  tags:
+    - gpg

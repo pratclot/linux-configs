@@ -49,6 +49,7 @@
     - charles
     - ripgrep
     - jq
+    - scrcpy
 
 - name: fix mtr
   tags: mtr

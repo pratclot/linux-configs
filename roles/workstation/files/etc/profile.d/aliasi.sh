@@ -4,6 +4,11 @@ alias vi='vim'
 alias awk-sum='awk '\''{sum+=$NF} END {print sum}'\'''
 alias gip='ip a | grep '\''inet '\'''
 alias mip='ip r g 1 | awk '\''/via/ {print $(NF-2)}'\'''
+alias myip='python3 -c '\''import socket
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+s.connect(("8.8.8.8", 80))
+print(s.getsockname()[0])
+s.close()'\'''
 alias pws='python3 -m http.server 80'
 alias tstrace='strace -s255 -ttfFp'
 alias gitlog='git log --branches --remotes --tags --graph --oneline --decorate'

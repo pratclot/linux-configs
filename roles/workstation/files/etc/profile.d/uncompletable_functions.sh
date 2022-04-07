@@ -1,44 +1,50 @@
 #!/bin/bash
 dff() {
-       if [ $# -gt 0 ]; then
-           df $@ | grep -v "/var/lib/docker/\|/snap/"
-       else
-           df -h | grep -v "/var/lib/docker/\|/snap"
-       fi
+  if [ $# -gt 0 ]; then
+    df $@ | grep -v "/var/lib/docker/\|/snap/"
+  else
+    df -h | grep -v "/var/lib/docker/\|/snap"
+  fi
 }
 mkcd() {
-       mkdir -p -- "$1" &&
-       cd -P -- "$1"
+  mkdir -p -- "$1" &&
+    cd -P -- "$1"
 }
 dctop() {
-       docker-compose top $@
+  docker-compose top $@
 }
 dclogs() {
-       docker-compose logs $@
+  docker-compose logs $@
 }
 dcrst() {
-       docker-compose restart
+  docker-compose restart
 }
 hgrep() {
-       (head -1; grep $@)
+  (
+    head -1
+    grep $@
+  )
 }
 htail() {
-       (head -1; tail $@)
+  (
+    head -1
+    tail $@
+  )
 }
 aur() {
   export AUR_PREV_PATH=$(pwd) &&
-  cd ~/gits &&
-  if [ ! -d "$1" ]; then
-    git clone https://aur.archlinux.org/"$1".git
-  fi
+    cd ~/gits &&
+    if [ ! -d "$1" ]; then
+      git clone https://aur.archlinux.org/"$1".git
+    fi
   cd "$1" &&
-  makepkg -si &&
-  cd "${AUR_PREV_PATH}"
+    makepkg -si &&
+    cd "${AUR_PREV_PATH}"
 }
 aum() {
-	cd "$1" &&
-	makepkg -si
-	cd ..
+  cd "$1" &&
+    makepkg -si
+  cd ..
 }
 getp() {
   op get item $1 | jq -r '.details.fields[] | select(.designation=="password") | .value'
@@ -64,7 +70,31 @@ alsp() {
   port=$1
   iface=$(ip r | awk '/default/ {print $NF}')
   net=$(ip a show $iface | awk '/inet / {print $2}')
-  1>/dev/null 2>/dev/null nmap -sP $net -oG - --host-timeout 1 &
+  nmap 1>/dev/null 2>/dev/null -sP $net -oG - --host-timeout 1 &
   neighbours=$(ip -4 n show dev $iface | cut -d" " -f1 | tr "\n" " ")
   nmap -PN -p $port $neighbours --open -oG - 2>/dev/null | awk -v pattern="$port/open" '$0 ~ pattern {print $2}'
+}
+pwss() {
+  if [ $# -gt 0 ]; then
+    SERVE_PATH=$1
+  else
+    SERVE_PATH=./
+  fi
+  ARGS=(
+    -m http.server 80
+    --directory $SERVE_PATH
+  )
+  python3 "${ARGS[@]}"
+}
+aqr() {
+  if [ $# -gt 0 ]; then
+    APK_NAME=$(basename $1)
+    APK_URL="http://$(myip)/$APK_NAME"
+    echo $APK_URL
+    qrencode -t ANSIUTF8 -o- $APK_URL
+    export -f pwss
+    pwss $(dirname $1)
+  else
+    echo "Please, supply apk's filename, maybe by pressing Tab..."
+  fi
 }

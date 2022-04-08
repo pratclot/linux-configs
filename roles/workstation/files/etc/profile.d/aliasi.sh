@@ -41,6 +41,9 @@ alias urlencode='python3 -c "import sys, urllib.parse as ul; \
     print (ul.quote_plus(sys.argv[1]))"'
 alias gradlektsconverter=$(readlink -f `which gradlekotlinconverter`)
 alias gloww='while true; do clear; glow README.md; sleep 2; done'
+alias cfmta='sed -e "s/\(.\)'\'' /\1'\''\\n/g"'
+alias trail1='sed '\''/^$/! s/$/ \\/g'\'''
+alias trail2='sed '\''1 s/ \\$//'\'''
 
 # kubectl
 alias kev='kubectl get events --sort-by="{.lastTimestamp}"'

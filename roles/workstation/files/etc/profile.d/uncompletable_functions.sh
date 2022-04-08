@@ -98,3 +98,14 @@ aqr() {
     echo "Please, supply apk's filename, maybe by pressing Tab..."
   fi
 }
+cfmt() {
+  if [ $# -gt 0 ]; then
+    sed -i'' -e '1 s/^/#!\/bin\/bash\n\n/' $1
+    sed -i'' -e "s/\(.\)' /\1'\\n/g" $1
+    sed -i'' -e '/^$/! s/$/ \\/g' $1
+    sed -i'' -e '1 s/ \\$//' $1
+    chmod +x $1
+  else
+    echo "Please, supply the filename"
+  fi
+}

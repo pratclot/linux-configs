@@ -109,3 +109,19 @@ cfmt() {
     echo "Please, supply the filename"
   fi
 }
+astart() {
+  if [ $# -gt 0 ]; then
+    adb shell monkey -p $1 1
+  else
+    echo "Please, supply the package name"
+  fi
+}
+adateset() {
+  if [ $# -gt 0 ]; then
+    echo "Treating input as date in %m%e%H%M format: 04081759 == April 08 17:59"
+    adb shell toybox date -D%m%e%H%M $1
+  else
+    echo "'adb root' maybe needed if you get 'Operation not permitted' error"
+    adb shell toybox date -D%m%e%H%M $(adatelocal)
+  fi
+}

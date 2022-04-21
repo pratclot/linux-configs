@@ -125,3 +125,10 @@ adateset() {
     adb shell toybox date -D%m%e%H%M $(adatelocal)
   fi
 }
+arestart() {
+  if [ $# -gt 0 ]; then
+    astop $1 && astart $1
+  else
+    echo "Please, supply the package name"
+  fi
+}

@@ -132,3 +132,44 @@ arestart() {
     echo "Please, supply the package name"
   fi
 }
+ainstall() {
+  if [ $# -gt 0 ]; then
+    adb install $1
+  else
+    echo "Please, supply the apk path"
+  fi
+}
+afind() {
+  if [ $# -gt 1 ]; then
+    FLAVOUR=$1
+    BUILD_TYPE=$2
+    APK_DIR=${3:-apks}
+    find ./ -path "*${APK_DIR}/*${FLAVOUR}*${BUILD_TYPE}*apk"
+  else
+    echo "I take three args only: FLAVOUR, BUILD_TYPE and APK_DIR!"
+  fi
+}
+aipr() {
+  ainstall $(afind prod release)
+}
+aisr() {
+  ainstall $(afind staging release)
+}
+aipro() {
+  ainstall $(afind prod release apks_old)
+}
+aisro() {
+  ainstall $(afind staging release apks_old)
+}
+aipd() {
+  ainstall $(afind prod debug)
+}
+aisd() {
+  ainstall $(afind staging debug)
+}
+aipdo() {
+  ainstall $(afind prod debug apks_old)
+}
+aisdo() {
+  ainstall $(afind staging debug apks_old)
+}

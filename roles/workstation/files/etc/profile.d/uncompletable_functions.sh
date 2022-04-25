@@ -173,3 +173,29 @@ aipdo() {
 aisdo() {
   ainstall $(afind staging debug apks_old)
 }
+aclick() { (
+  set -e
+  if [ $# -gt 0 ]; then
+    while getopts "a" opt; do
+      case "$opt" in
+      a)
+        ADDITIONAL_TEXT=$OPTARG
+        ;;
+      *) ;;
+      esac
+    done
+
+    echo "Will use text match: $*"
+    echo "Will use additional text match: $ADDITIONAL_TEXT"
+    adb shell uiautomator dump
+    adb pull {/sdcard,/tmp}/window_dump.xml
+    echo """
+    Executing this:
+    ~/scripts/android_get_view_center.py -d /tmp/window_dump.xml "$*" -a $ADDITIONAL_TEXT
+    """
+    COORDS=$(python3 ~/scripts/android_get_view_center.py -d /tmp/window_dump.xml "$*" -a $ADDITIONAL_TEXT)
+    adb shell input tap $COORDS
+  else
+    echo "Please, tell me what text to click"
+  fi
+); }

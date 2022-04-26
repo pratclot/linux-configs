@@ -39,7 +39,7 @@ def configure_logging(args):
 def log_args(args):
     logging.debug(f'Arguments for this invocation:')
     for i, j in args.__dict__.items():
-        logging.debug(f'{i}: {j}')
+        logging.debug(f'  {i}: {j}')
 
 
 def add_parents(tree):
@@ -55,12 +55,12 @@ def find_all_children_with_text(text_to_match, tree):
     return tree.findall(f'.//node[@text="{text_to_match}"]')
 
 
-def match_text_on_siblings(match: Element, text_add_to_match: str):
+def find_all_siblings_with_text(match: Element, text_add_to_match: str):
     return find_all_children_with_text(text_add_to_match, match.attrib['__parent__'])
 
 
-def get_printable_coordinates(i):
-    return get_rect_center(i.attrib['bounds'])
+def get_printable_coordinates(xml_element: Element):
+    return get_rect_center(xml_element.attrib['bounds'])
 
 
 def read_args(args):
@@ -84,7 +84,7 @@ def main():
 
     for i in matches:
         logging.debug(i.attrib['__parent__'].attrib['class'])
-    for i in filter(lambda j: match_text_on_siblings(j, text_add_to_match), matches):
+    for i in filter(lambda j: find_all_siblings_with_text(j, text_add_to_match), matches):
         print(*get_printable_coordinates(i))
         return
 

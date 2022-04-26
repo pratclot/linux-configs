@@ -175,27 +175,68 @@ aisdo() {
 }
 aclick() { (
   set -e
+  acoords "$@"
+  set -x
+  adb shell input tap $COORDS
+  set +x
+); }
+acoords() {
   if [ $# -gt 0 ]; then
-    while getopts "a" opt; do
-      case "$opt" in
+    OPTIND=1
+    while getopts a: opt; do
+      case $opt in
       a)
         ADDITIONAL_TEXT=$OPTARG
         ;;
       *) ;;
+
       esac
     done
 
+    shift $(($OPTIND - 1))
     echo "Will use text match: $*"
     echo "Will use additional text match: $ADDITIONAL_TEXT"
     adb shell uiautomator dump
     adb pull {/sdcard,/tmp}/window_dump.xml
-    echo """
-    Executing this:
-    ~/scripts/android_get_view_center.py -d /tmp/window_dump.xml "$*" -a $ADDITIONAL_TEXT
-    """
-    COORDS=$(python3 ~/scripts/android_get_view_center.py -d /tmp/window_dump.xml "$*" -a $ADDITIONAL_TEXT)
-    adb shell input tap $COORDS
+    set -x
+    export COORDS=$(python3 ~/scripts/android_get_view_center.py -d /tmp/window_dump.xml "$*" -a "$ADDITIONAL_TEXT")
+    set +x
   else
     echo "Please, tell me what text to click"
   fi
-); }
+}
+example() {
+  OPTIND=1
+  aflag=
+  bflag=
+  while getopts ab: name; do
+    case $name in
+    a) aflag=1 ;;
+    b)
+      bflag=1
+      bval="$OPTARG"
+      ;;
+    ?)
+      printf "Usage: %s: [-a] [-b value] args\n" $0
+      exit 2
+      ;;
+    esac
+  done
+  if [ ! -z "$aflag" ]; then
+    printf "Option -a specified\n"
+  fi
+  if [ ! -z "$bflag" ]; then
+    printf 'Option -b "%s" specified\n' "$bval"
+  fi
+  shift $(($OPTIND - 1))
+  printf "Remaining arguments are: %s\n$*"
+}
+setup_godroid() {
+  aclick CONFIRM
+  aclick -a "goDroid - Mock" Not allowed
+  aclick Allow access to manage all files
+  aback
+  aback
+  sleep 5
+  aclick COUNTRY
+}

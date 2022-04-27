@@ -240,3 +240,8 @@ setup_godroid() {
   sleep 5
   aclick COUNTRY
 }
+setup_godroid_25() {
+  aclick ALLOW
+  aclick ALLOW
+  aclick COUNTRY
+}

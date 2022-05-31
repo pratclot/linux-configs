@@ -87,3 +87,7 @@ alias aopen='adb shell am start -n '
 alias adevsett='adb shell am start -a com.android.settings.APPLICATION_DEVELOPMENT_SETTINGS'
 alias afbset='adb shell setprop debug.firebase.analytics.app'
 alias afbget='adb shell getprop debug.firebase.analytics.app'
+
+# crappy macos
+alias sss='sudo lsof -nP -i4TCP:$PORT | grep LISTEN'
+alias ssss='sudo lsof -i -P | grep LISTEN | grep :$PORT | grep IPv4'

@@ -89,7 +89,7 @@ pwss() {
 aqr() {
   if [ $# -gt 0 ]; then
     APK_NAME=$(basename $1)
-    APK_URL="http://$(myip)/$APK_NAME"
+    export APK_URL="http://$(myip)/$APK_NAME"
     echo $APK_URL
     qrencode -t ANSIUTF8 -o- $APK_URL
     export -f pwss
@@ -97,6 +97,10 @@ aqr() {
   else
     echo "Please, supply apk's filename, maybe by pressing Tab..."
   fi
+}
+aiwf() {
+  aqr $1 &
+  adb shell am start -a android.intent.action.VIEW -d $APK_URL
 }
 cfmt() {
   if [ $# -gt 0 ]; then
@@ -134,6 +138,7 @@ arestart() {
 }
 ainstall() {
   if [ $# -gt 0 ]; then
+    echo "Installing $1"
     adb install $1
   else
     echo "Please, supply the apk path"

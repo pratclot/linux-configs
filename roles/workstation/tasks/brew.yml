@@ -14,16 +14,19 @@
   with_items:
     - adoptopenjdk8
     - iterm2
-    - vagrant
-    - virtualbox
+#    - vagrant
+#    - virtualbox
     - macdown
-#    - docker
+    - docker
 
 - name: install brew packages
+  tags:
+    - homebrew
   homebrew:
     name: '{{ item }}'
     state: present
   with_items:
+    - awscli
     - ranger
     - python
     - node
@@ -31,8 +34,7 @@
     - groovy
     - gpg
     - coreutils
-#    - docker
-    - podman
+    - docker
     - iproute2mac
     - tomcat
     - tomcat@8
@@ -50,8 +52,10 @@
     - ripgrep
     - jq
     - scrcpy
+    - vault
 
 - name: fix mtr
+  become: yes
   tags: mtr
   shell: |
     for i in $(brew list mtr | grep sbin/mtr); do ln $i /usr/local/bin/$(basename $i); done

@@ -4,6 +4,7 @@
     state: present
   with_items:
     - adoptopenjdk/openjdk
+    - warrensbox/tap/tfswitch
 
 - name: install casks
   homebrew_cask:

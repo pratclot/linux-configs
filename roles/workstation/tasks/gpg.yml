@@ -1,0 +1,4 @@
+- name: create default gpg config
+  synchronize:
+    src: gpg-agent.conf
+    dest: ~/.gnupg/gpg-agent.conf

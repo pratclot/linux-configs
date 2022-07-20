@@ -4,6 +4,7 @@
     state: present
   with_items:
     - adoptopenjdk/openjdk
+    - warrensbox/tap/tfswitch
 
 - name: install casks
   homebrew_cask:
@@ -14,16 +15,19 @@
   with_items:
     - adoptopenjdk8
     - iterm2
-    - vagrant
-    - virtualbox
+#    - vagrant
+#    - virtualbox
     - macdown
     - docker
 
 - name: install brew packages
+  tags:
+    - homebrew
   homebrew:
     name: '{{ item }}'
     state: present
   with_items:
+    - awscli
     - ranger
     - python
     - node
@@ -42,7 +46,17 @@
     - mtr
     - watch
     - sonar-scanner
+    - pass
+    - pinentry-mac
+    - insomnia
+    - charles
+    - ripgrep
+    - jq
+    - scrcpy
+    - vault
 
 - name: fix mtr
+  become: yes
+  tags: mtr
   shell: |
     for i in $(brew list mtr | grep sbin/mtr); do ln $i /usr/local/bin/$(basename $i); done

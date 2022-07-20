@@ -5,6 +5,7 @@
     dest: /etc/profile.d
 
 - name: create kubectl aliases
+  become: yes
   get_url:
     url: '{{ item.url }}'
     dest: '{{ item.dest }}'
@@ -53,3 +54,10 @@
   when: ansible_distribution == "Ubuntu" and check.found == 0
   tags:
     - bashrc
+
+- name: copy local scripts
+  synchronize:
+    src: scripts
+    dest: ~/
+  tags:
+    - scripts

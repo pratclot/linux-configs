@@ -4,6 +4,11 @@ alias vi='vim'
 alias awk-sum='awk '\''{sum+=$NF} END {print sum}'\'''
 alias gip='ip a | grep '\''inet '\'''
 alias mip='ip r g 1 | awk '\''/via/ {print $(NF-2)}'\'''
+alias myip='python3 -c '\''import socket
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+s.connect(("8.8.8.8", 80))
+print(s.getsockname()[0])
+s.close()'\'''
 alias pws='python3 -m http.server 80'
 alias tstrace='strace -s255 -ttfFp'
 alias gitlog='git log --branches --remotes --tags --graph --oneline --decorate'
@@ -36,8 +41,9 @@ alias urlencode='python3 -c "import sys, urllib.parse as ul; \
     print (ul.quote_plus(sys.argv[1]))"'
 alias gradlektsconverter=$(readlink -f `which gradlekotlinconverter`)
 alias gloww='while true; do clear; glow README.md; sleep 2; done'
-alias als='alsp 5555'
-alias aconnect='until adb connect $(als); do sleep 1; done'
+alias cfmta='sed -e "s/\(.\)'\'' /\1'\''\\n/g"'
+alias trail1='sed '\''/^$/! s/$/ \\/g'\'''
+alias trail2='sed '\''1 s/ \\$//'\'''
 
 # kubectl
 alias kev='kubectl get events --sort-by="{.lastTimestamp}"'
@@ -61,3 +67,27 @@ alias cpc='cat <<< $(copyq clipboard)'
 # msi
 alias temps="sudo isw -r 16S3EMS1"
 
+# android
+alias als='alsp 5555'
+alias aconnect='until adb connect $(als); do sleep 1; done'
+alias adbr='adb shell su 0 setprop ctl.restart adbd'
+alias agsn='adb shell getprop ro.serialno'
+alias awsn='adb shell setprop ro.serialno $(agsn)-NEW; adbr'
+alias ao='adb shell input keyevent KEYCODE_APP_SWITCH'
+alias aback='adb shell input keyevent KEYCODE_BACK'
+alias ahome='adb shell input keyevent KEYCODE_HOME'
+alias asett='adb shell am start -a android.settings.SETTINGS'
+alias astop='adb shell am force-stop '
+alias alist='adb shell pm list package '
+alias asn='adb shell getprop ro.serialno'
+alias adatelocal='date +%m%d%H%M'
+alias adateget='adb shell toybox date +%m%d%H%M'
+alias awindow='adb shell dumpsys window windows | grep -E "mCurrentFocus|mFocusedApp|mInputMethodTarget|mSurface"'
+alias aopen='adb shell am start -n '
+alias adevsett='adb shell am start -a com.android.settings.APPLICATION_DEVELOPMENT_SETTINGS'
+alias afbset='adb shell setprop debug.firebase.analytics.app'
+alias afbget='adb shell getprop debug.firebase.analytics.app'
+
+# crappy macos
+alias sss='sudo lsof -nP -i4TCP:$PORT | grep LISTEN'
+alias ssss='sudo lsof -i -P | grep LISTEN | grep :$PORT | grep IPv4'

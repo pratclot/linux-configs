@@ -98,6 +98,127 @@ aqr() {
     echo "Please, supply apk's filename, maybe by pressing Tab..."
   fi
 }
+rqr ()
+{
+    SERVE_PATH=${1:-./};
+    IP=$(hostname -I | awk '{print $1}');
+    URL="http://$(myip):8000/";
+    echo "Upload URL: $URL";
+    qrencode -t ANSIUTF8 -o- "$URL";
+    export PWRECV_DIR="$SERVE_PATH";
+    pwrecv "$SERVE_PATH"
+}
+
+pwrecv() {
+    DIR=${1:-./}
+
+    cat << 'EOF' > /tmp/pwrecv_server.py
+import http.server, cgi, os
+
+UPLOAD_DIR = os.environ.get("PWRECV_DIR", ".")
+
+PAGE_HTML = b"""
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Upload file to PC</title>
+<style>
+    body {
+        font-family: sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: #f0f0f0;
+    }
+    .container {
+        background: white;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        text-align: center;
+    }
+    h2 {
+        margin-bottom: 30px;
+        color: #026;
+    }
+    input[type="file"] {
+        display: block;
+        margin: 0 auto 20px;
+        font-size: 1.2em;
+    }
+    input[type="submit"] {
+        background-color: #026;
+        color: white;
+        font-size: 1.3em;
+        padding: 15px 40px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+    input[type="submit"]:hover {
+        background-color: #048;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+<h2>Upload file to PC</h2>
+<form enctype="multipart/form-data" method="post">
+    <input name="file" type="file" required><br>
+    <input type="submit" value="Upload">
+</form>
+</div>
+</body>
+</html>
+"""
+
+class Handler(http.server.SimpleHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header("Content-type", "text/html")
+        self.end_headers()
+        self.wfile.write(PAGE_HTML)
+
+    def do_POST(self):
+        ctype, _ = cgi.parse_header(self.headers.get('Content-type'))
+        if ctype == 'multipart/form-data':
+            fs = cgi.FieldStorage(fp=self.rfile,
+                                  headers=self.headers,
+                                  environ={'REQUEST_METHOD':'POST'})
+        else:
+            self.send_error(400, "Bad upload")
+            return
+
+        if "file" not in fs:
+            self.send_error(400, "File missing")
+            return
+
+        fileitem = fs["file"]
+
+        if not fileitem.filename:
+            self.send_error(400, "No filename")
+            return
+
+        filename = os.path.basename(fileitem.filename)
+        outpath = os.path.join(UPLOAD_DIR, filename)
+
+        with open(outpath, "wb") as f:
+            f.write(fileitem.file.read())
+
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(f"Uploaded to: {outpath}".encode())
+        print(f"Uploaded: {outpath}")
+
+http.server.HTTPServer(("", 8000), Handler).serve_forever()
+EOF
+
+    PWRECV_DIR="$DIR" python3 /tmp/pwrecv_server.py
+}
+
+
 aiwf() {
   aqr $1 &
   adb shell am start -a android.intent.action.VIEW -d $APK_URL

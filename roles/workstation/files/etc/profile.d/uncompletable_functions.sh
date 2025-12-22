@@ -88,8 +88,9 @@ pwss() {
 }
 aqr() {
   if [ $# -gt 0 ]; then
-    APK_NAME=$(basename $1)
-    export APK_URL="http://$(myip)/$APK_NAME"
+    APK_NAME="$(basename -- "$1")"
+    APK_NAME_ENC="$(printf '%s' "$APK_NAME" | jq -sRr @uri)"
+    export APK_URL="http://$(myip)/$APK_NAME_ENC"
     echo $APK_URL
     qrencode -t ANSIUTF8 -o- $APK_URL
     export -f pwss

@@ -75,16 +75,79 @@ alsp() {
   nmap -PN -p $port $neighbours --open -oG - 2>/dev/null | awk -v pattern="$port/open" '$0 ~ pattern {print $2}'
 }
 pwss() {
-  if [ $# -gt 0 ]; then
-    SERVE_PATH=$1
-  else
-    SERVE_PATH=./
-  fi
-  ARGS=(
-    -m http.server 80
-    --directory $SERVE_PATH
-  )
-  python3 "${ARGS[@]}"
+    if [ $# -gt 0 ]; then
+        SERVE_PATH="$1"
+    else
+        SERVE_PATH="./"
+    fi
+
+    python3 - "$SERVE_PATH" <<'PYEOF'
+import os
+import re
+import sys
+from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+
+directory = sys.argv[1]
+os.chdir(directory)
+
+class RangeRequestHandler(SimpleHTTPRequestHandler):
+    def send_head(self):
+        path = self.translate_path(self.path)
+
+        if os.path.isdir(path):
+            return super().send_head()
+
+        try:
+            f = open(path, 'rb')
+        except OSError:
+            self.send_error(404, "File not found")
+            return None
+
+        size = os.fstat(f.fileno()).st_size
+        ctype = self.guess_type(path)
+
+        range_header = self.headers.get("Range")
+        if range_header:
+            m = re.match(r"bytes=(\d+)-(\d*)", range_header)
+            if m:
+                start = int(m.group(1))
+                end = int(m.group(2)) if m.group(2) else size - 1
+
+                if start >= size:
+                    self.send_error(416, "Requested Range Not Satisfiable")
+                    return None
+
+                self.send_response(206)
+                self.send_header("Content-Type", ctype)
+                self.send_header("Content-Range", f"bytes {start}-{end}/{size}")
+                self.send_header("Content-Length", str(end - start + 1))
+                self.send_header("Accept-Ranges", "bytes")
+                self.end_headers()
+
+                f.seek(start)
+                remaining = end - start + 1
+                while remaining > 0:
+                    chunk = f.read(min(64 * 1024, remaining))
+                    if not chunk:
+                        break
+                    self.wfile.write(chunk)
+                    remaining -= len(chunk)
+
+                f.close()
+                return None
+
+        # Normal full response
+        self.send_response(200)
+        self.send_header("Content-Type", ctype)
+        self.send_header("Content-Length", str(size))
+        self.send_header("Accept-Ranges", "bytes")
+        self.end_headers()
+        return f
+
+
+print(f"Serving {directory} with resume support on port 80")
+ThreadingHTTPServer(("0.0.0.0", 80), RangeRequestHandler).serve_forever()
+PYEOF
 }
 aqr() {
   if [ $# -gt 0 ]; then
